@@ -5,8 +5,12 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
+app.use(cors({
+    origin: "*"
+}));
 
 // routes
 app.use("/api/auth", require("./routes/authRoutes"));
@@ -14,9 +18,10 @@ app.use("/api/posts", require("./routes/postRoutes"));
 
 // koppling till DB
 mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(5000, () =>
-        console.log("Server running on port 5000"));
-})
-.catch(err => console.log(err));
+    .then(() => {
+        console.log("Connected to MongoDB");
+        app.listen(PORT, () =>
+            console.log(`Server running on port ${PORT}`)
+        );
+    })
+    .catch(err => console.log(err));
