@@ -44,7 +44,7 @@ router.delete("/:id", auth, async (req, res) => {
 
     await Post.findByIdAndDelete(req.params.id);
 
-    res.json("Post deleted");
+    res.json("Inlägget är raderat");
 });
 
 module.exports = router;
