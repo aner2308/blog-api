@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/posts", require("./routes/postRoutes"));
 
-// connect DB
+// koppling till DB
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("Connected to MongoDB");
