@@ -95,4 +95,29 @@ router.post("/login", async (req, res) => {
 
 });
 
+// kontrollera inloggad användare via token
+router.get("/validate", async (req, res) => {
+
+    const authHeader = req.header("Authorization");
+
+    if (!authHeader) {
+        return res.status(401).json({ message: "Inget token hittades" });
+    }
+
+    const token = authHeader.replace("Bearer ", "");
+
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findById(verified.id).select("-password");
+
+        res.status(200).json({
+            user: user
+        });
+
+    } catch (err) {
+        res.status(401).json({ message: "Ogiltig token" });
+    }
+});
+
 module.exports = router;
