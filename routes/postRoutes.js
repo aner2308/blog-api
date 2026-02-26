@@ -6,7 +6,7 @@ const auth = require("../middleware/authMiddleware");
 router.get("/", async (req, res) => {
 
     //Sorterar så senaste hamnar först
-    const posts = (await Post.find()).sort({ createdAt: -1 });
+    const posts = await Post.find().sort({ createdAt: -1 });
 
     res.json(posts);
 });
