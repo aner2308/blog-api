@@ -5,7 +5,8 @@ const auth = require("../middleware/authMiddleware");
 //Hämta alla inlägg
 router.get("/", async (req, res) => {
 
-    const posts = await Post.find();
+    //Sorterar så senaste hamnar först
+    const posts = (await Post.find()).sort({ createdAt: -1 });
 
     res.json(posts);
 });
